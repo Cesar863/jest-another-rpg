@@ -1,7 +1,3 @@
-// const { jest } = require('@jest/globals');
-// const { expect } = require('@jest/globals');
-// const { test } = require('picomatch');
-
 
 const Player = require('../lib/Player');
 const Potion = require('../lib/Potion');
@@ -41,3 +37,32 @@ test('gets inventory from player or returns false', () => {
 
     expect(player.getInventory()).toEqual(false);
 });
+
+test("get players heath value", () => {
+    const player = new Player('Dave');
+
+    expect(player.getHealth()).toEqual(expect.stringContaining(player.health.toString()));
+});
+
+test('checks if player is alive or not', () => {
+    const player = new Player('Dave');
+
+    expect(player.isAlive()).toBeTruthy();
+
+    player.health = 0;
+
+    expect(player.isAlive()).toBeFalsy();
+})
+
+test("subtracts from player health", () => {
+    const player = new Player('Dave');
+    const oldHealth = player.health;
+
+    player.reduceHealth(5);
+
+    expect(player.health).toBe(oldHealth - 5);
+
+    player.reduceHealth(99999);
+
+    expect(player.health).toBe(0);
+})
